@@ -20,9 +20,7 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
 
   producer:
-    build:
-      context: .
-      dockerfile: Dockerfile-producer  # 指定 Producer 的 Dockerfile
+    build: ./producer
     container_name: producer
     depends_on:
       - kafka
@@ -31,9 +29,7 @@ services:
     restart: always
 
   consumer:
-    build:
-      context: .
-      dockerfile: Dockerfile-consumer  # 指定 Consumer 的 Dockerfile
+    build: ./consumer
     container_name: consumer
     depends_on:
       - kafka

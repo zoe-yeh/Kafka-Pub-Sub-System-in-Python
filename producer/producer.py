@@ -1,7 +1,8 @@
-from kafka import KafkaProducer
 import json
 import time
 import logging
+
+from kafka import KafkaProducer
 
 TOPIC_NAME = "test_topic"
 BROKER = "kafka:9092"
