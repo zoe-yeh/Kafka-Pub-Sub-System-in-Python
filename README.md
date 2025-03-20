@@ -1,52 +1,65 @@
-# Kafka Pub/Sub System in Python
+# Kafka Pub/Sub System
 
-## Overview
-This project implements a simple Kafka-based Pub/Sub system using Python. The system consists of:
-
-- Data Producer: Generates sample data and publishes it to a Kafka topic.
-- Data Consumer: Subscribes to the Kafka topic and processes/display the received data.
-- Kafka with Docker: Kafka is containerized using Docker to simplify deployment.
-- Containerized Applications: Kafka, along with both the producer and consumer, are containerized for easy execution.
-
-## Technologies Used
-- Kafka (via Docker)
-- Python
-- Kafka-Python (for Kafka interaction)
-- Docker & Docker Compose
-
-## Setup Instructions
-
-### 1. Clone the Repository
-```bash
-git clone https://github.com/zoe-yeh/Kafka-Pub-Sub-System-in-Python.git
-cd kafka-pubsub-python
-```
-
-### 2. Start Kafka with Docker Compose
-Ensure Docker is installed, then run:
-```bash
-docker-compose up -d
-```
-This starts Kafka and Zookeeper as needed.
-
-### 3. Build and Run the Producer & Consumer
-#### Producer
-```bash
-docker build -t kafka-producer -f producer.Dockerfile .
-docker run --network=host kafka-producer
-```
-#### Consumer
-```bash
-docker build -t kafka-consumer -f consumer.Dockerfile .
-docker run --network=host kafka-consumer
-```
+## Introduction
+This project is a simple Kafka Publish/Subscribe (Pub/Sub) system, consisting of a data producer (Producer) and a data consumer (Consumer) that communicate through Kafka.
 
 ## Architecture
 ```
-+--------------+      +----------+      +--------------+
-| Data Producer| ---> |  Kafka   | ---> | Data Consumer|
-+--------------+      +----------+      +--------------+
++------------+        +----------+        +------------+
+|  Producer  | --->   |  Kafka   | --->   |  Consumer  |
++------------+        +----------+        +------------+
 ```
-- Producer: Publishes messages to a Kafka topic.
-- Kafka: Manages message distribution.
-- Consumer: Listens to the topic and processes messages.
+- **Producer**: Publishes messages to a Kafka topic.
+- **Kafka**: Acts as a message broker, managing topics and message transmission.
+- **Consumer**: Subscribes to a Kafka topic, receives, and processes messages.
+
+## Tech Stack
+- **Kafka**: Message broker
+- **Docker**: Containerization of Kafka, Producer, and Consumer
+- **Python**: Used to implement Producer and Consumer
+- **kafka-python**: Kafka client library for Python
+
+## Prerequisites
+- Docker & Docker Compose
+- Python 3.9 or later
+
+## Quick Start
+
+### 1. Start Kafka Services
+Start Kafka and Zookeeper using `docker-compose.yml`:
+```sh
+docker-compose up -d
+```
+
+### 2. Start Producer and Consumer
+Build and run the Producer and Consumer containers:
+```sh
+docker-compose up --build
+```
+
+### 3. Check Logs
+Check if the Producer is sending data correctly:
+```sh
+docker logs -f producer
+```
+Check if the Consumer is receiving data correctly:
+```sh
+docker logs -f consumer
+```
+
+## Project Structure
+```
+├── consumer
+│   ├── consumer.py     # Kafka Consumer script
+│   ├── Dockerfile      # Dockerfile for Consumer
+│   ├── requirements.txt # Dependencies for Consumer
+│
+├── producer
+│   ├── producer.py     # Kafka Producer script
+│   ├── Dockerfile      # Dockerfile for Producer
+│   ├── requirements.txt # Dependencies for Producer
+│
+├── docker-compose.yml  # Docker Compose configuration file
+└── README.md           # Project documentation
+```
+
